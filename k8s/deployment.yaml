@@ -51,6 +51,10 @@ spec:
     metadata:
       labels:
         app: web
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: "/metrics"
     spec:
       containers: 
         - name: web
@@ -66,16 +70,3 @@ spec:
             value: "Pg#123"
           - name: DB_HOST
             value: "postgre"
----
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: web
-spec:
-  selector:
-    app: web
-  ports:
-    - port: 80
-      targetPort: 8080
-  type: LoadBalancer
